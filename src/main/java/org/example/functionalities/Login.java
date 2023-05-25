@@ -1,5 +1,7 @@
 package org.example.functionalities;
 
+import org.example.View.Customerview;
+
 import java.sql.*;
 import java.util.Scanner;
 
@@ -7,7 +9,7 @@ public class Login {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/wileybankapp";
     static final String USER = "root";
-    static final String PASS = "yedtutti";
+    static final String PASS = "imsachin@161";
 
     public static void main(String[] args) {
         Connection conn = null;
@@ -40,6 +42,9 @@ public class Login {
 
             if (rs.next()) {
                 System.out.println("Login successful!");
+                String[] arg = new String[1];
+                arg[0] = id;
+                Customerview.main(arg);
                 // Perform further actions or display user information
             } else {
                 System.out.println("Invalid login credentials!");

@@ -32,13 +32,17 @@ public class Customerview {
                    break;
                case 2:
                    System.out.println("How much amount you want to add?");
-                   int amount  = sc.nextInt();
-                   CustomerController.addAmount(amount,id);
+                   double amount  = sc.nextDouble();
+                   int idd = Integer.parseInt(args[0]);
+                   CustomerController.addAmount(amount,idd);
                    break;
                case 3:
                    System.out.println("How much amount you want to Withdraw?");
+
                    int amount2  = sc.nextInt();
-                   CustomerController.withdrawal(amount2,id);
+
+                   int idd2 = Integer.parseInt(args[0]);
+                   CustomerController.withdrawal(amount2,idd2);
                    break;
                case 4:
                    System.out.println("Enter the amount of loan u want to take");
@@ -68,7 +72,8 @@ public class Customerview {
                            break;
                    }
 
-                   CustomerController.takeLoan(princpleAmount,years,loanType,id);
+                   int idd3 = Integer.parseInt(args[0]);
+                   CustomerController.takeLoan(princpleAmount,years,loanType,idd3);
                    break;
                default:
                    break;

@@ -8,7 +8,7 @@ public class SignUp {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/wileybankapp";
     static final String USER = "root";
-    static final String PASS = "yedtutti";
+    static final String PASS = "imsachin@161";
 
     public static void main(String[] args) {
         System.out.println();
@@ -23,7 +23,7 @@ public class SignUp {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             // Prepare the insert statement
-            String insertQuery = "INSERT INTO customers (id, password, email, full_name, address) VALUES (?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO customer (id, password, email, full_name, address) VALUES (?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(insertQuery);
 
             // Get user input for customer details
@@ -32,14 +32,15 @@ public class SignUp {
             System.out.print("Enter customer ID: ");
             String id = scanner.nextLine();
 
-            System.out.print("Enter password: ");
-            String password = scanner.nextLine();
+            System.out.print("Enter full name: ");
+            String fullName = scanner.nextLine();
 
             System.out.print("Enter email: ");
             String email = scanner.nextLine();
 
-            System.out.print("Enter full name: ");
-            String fullName = scanner.nextLine();
+            System.out.print("Enter password: ");
+            String password = scanner.nextLine();
+
 
             System.out.print("Enter address: ");
             String address = scanner.nextLine();
@@ -54,6 +55,8 @@ public class SignUp {
             stmt.executeUpdate();
             System.out.println("Customer inserted successfully!");
 
+            Login.main(args);
+
             scanner.close();
         } catch (SQLException se) {
 
@@ -65,7 +68,7 @@ public class SignUp {
 }
 /*
 CREATE TABLE customers (
-    id varchar(10) PRIMARY KEY ,
+    id VARCHAR(100) PRIMARY KEY ,
     password VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
     full_name VARCHAR(100) NOT NULL,

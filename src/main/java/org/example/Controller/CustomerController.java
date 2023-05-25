@@ -24,6 +24,7 @@ public class CustomerController implements CustomerInterface {
    //=======================================
 
     public static double viewBalance(int id) {
+        con = DBConnection.createDBConnection();
     globalId = id;
         String query = "select customerId,customerBalance from customerAccount where id = ?";
             double amt = 0.00;
@@ -51,31 +52,53 @@ public class CustomerController implements CustomerInterface {
 
     public static void addAmount(double amount,int id) {
 
-        String query = "select customerBalance from customerAccount where id = ?";
+        System.out.println("IDDDDDD = "+id);
+
+        con = DBConnection.createDBConnection();
+
+        String query = "select customerBalance from customerAccount where customerId = ?";
 
         try {
-            ps = con.prepareStatement(query);
 
-            rs = ps.executeQuery();
+            Statement st = con.createStatement();
+            rs = st.executeQuery("select customerBalance from customerAccount where customerId = "+id);
 
-            double currentAmount = rs.getDouble(2);
+//            ps = con.prepareStatement(query);
+//            ps.setInt(1,id);
+            //rs = ps.executeQuery();
+
+            rs.next();
+
+            double currentAmount = rs.getDouble(1);
+
+            //currentAmount = currentAmount + amount;
+
 
             try
             {
                 String query2 = "update customerAccount set customerBalance = ? where customerId = ?";
+
+                //Statement st2 = con.createStatement();
+                //rs = st.executeQuery("update customerAccount set customerBalance = "+currentAmount+"where customerId ="+id);
+
                 ps = con.prepareStatement(query2);
-                ps.setDouble(2,amount + currentAmount);
 
-                int count = ps.executeUpdate();
+                ps.setDouble(1,amount + currentAmount);
 
-                if(count!=0)
-                {
-                    System.out.println("Unable to update balance");
-                }
-                else
-                {
-                    System.out.println("balance successfully updated");
-                }
+                ps.setInt(2,id);
+
+                ps.executeUpdate();
+
+                System.out.println("balance successfully updated");
+
+//                if(count!=0)
+//                {
+//                    System.out.println("Unable to update balance");
+//                }
+//                else
+//                {
+//                    System.out.println("balance successfully updated");
+//                }
             }
             catch (Exception e)
             {
@@ -89,17 +112,26 @@ public class CustomerController implements CustomerInterface {
 
     }
 
-
     public static void withdrawal(double amount,int id) {
 
-        String query = "select customerBalance from customerAccount where id = ?";
+        System.out.println("IDDDDDD = "+id);
+
+        con = DBConnection.createDBConnection();
+
+        String query = "select customerBalance from customerAccount where customerId = ?";
 
         try {
-            ps = con.prepareStatement(query);
 
-            rs = ps.executeQuery();
+            Statement st = con.createStatement();
+            rs = st.executeQuery("select customerBalance from customerAccount where customerId = "+id);
 
-            double currentAmount = rs.getDouble(2);
+//            ps = con.prepareStatement(query);
+//            ps.setInt(1,id);
+            //rs = ps.executeQuery();
+
+            rs.next();
+
+            double currentAmount = rs.getDouble(1);
 
             if(amount > currentAmount)
             {
@@ -110,25 +142,37 @@ public class CustomerController implements CustomerInterface {
                 try
                 {
                     String query2 = "update customerAccount set customerBalance = ? where customerId = ?";
+
+                    //Statement st2 = con.createStatement();
+                    //rs = st.executeQuery("update customerAccount set customerBalance = "+currentAmount+"where customerId ="+id);
+
                     ps = con.prepareStatement(query2);
-                    ps.setDouble(2,currentAmount - amount);
 
-                    int count = ps.executeUpdate();
+                    ps.setDouble(1,currentAmount - amount);
 
-                    if(count!=0)
-                    {
-                        System.out.println("Unable to Withdraw");
-                    }
-                    else
-                    {
-                        System.out.println("Amount Withdrawed Successfully");
-                    }
+                    ps.setInt(2,id);
+
+                    ps.executeUpdate();
+
+                    System.out.println("Amount successfully withdrawn");
+
+//                if(count!=0)
+//                {
+//                    System.out.println("Unable to update balance");
+//                }
+//                else
+//                {
+//                    System.out.println("balance successfully updated");
+//                }
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
                 }
             }
+
+            //currentAmount = currentAmount + amount;
+
 
 
         }
@@ -137,8 +181,67 @@ public class CustomerController implements CustomerInterface {
             e.printStackTrace();
         }
 
-
     }
+
+
+//    public static void withdrawal(double amount,int id) {
+//
+//        con = DBConnection.createDBConnection();
+//
+//        String query = "select customerBalance from customerAccount where id = ?";
+//
+//        try {
+//            Statement st = con.createStatement();
+//            rs = st.executeQuery("select customerBalance from customerAccount where customerId = "+id);
+//
+////            ps = con.prepareStatement(query);
+////            ps.setInt(1,id);
+//            //rs = ps.executeQuery();
+//
+//            rs.next();
+//
+//            double currentAmount = rs.getDouble(1);
+//
+//            if(amount > currentAmount)
+//            {
+//                System.out.println("Insufficient Balance");
+//            }
+//            else
+//            {
+//                try
+//                {
+//                    String query2 = "update customerAccount set customerBalance = ? where customerId = ?";
+//
+//                    //Statement st2 = con.createStatement();
+//                    //rs = st.executeQuery("update customerAccount set customerBalance = "+currentAmount+"where customerId ="+id);
+//
+//                    ps = con.prepareStatement(query2);
+//
+//                    ps.setDouble(1,currentAmount - amount);
+//
+//                    ps.setInt(2,id);
+//
+//                    ps.executeUpdate();
+//
+//                    System.out.println("Amount successfully withdrawed");
+//
+//
+//                }
+//                catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//
+//
+//    }
 
 
     public static double calcualteAmount(int principleAmount, int noOfYears,double rateOfInterst){
@@ -146,6 +249,10 @@ public class CustomerController implements CustomerInterface {
     }
 
     public static void takeLoan(int principleAmount, int noOfYears, String loanType,int id) {
+
+        con = DBConnection.createDBConnection();
+
+
 
         LoanType lType = null;
       if(loanType.equals(LoanType.HOME_LOAN))lType = LoanType.HOME_LOAN;
@@ -171,14 +278,13 @@ public class CustomerController implements CustomerInterface {
         try{
           con = DBConnection.createDBConnection();
               //1-id  //2  - balance  //3 - loan  //4 - emi
-          String query = "insert into customerAccount values(?,?,?,?)";
+          String query = "update customerAccount set loan = ? , emi = ?";
 
 
           ps = con.prepareStatement(query);
-          ps.setInt(1,id);
-          ps.setDouble(2,viewBalance(globalId));
-          ps.setDouble(3,finalAmount);
-          ps.setDouble(4,emi);
+          ps.setDouble(1,finalAmount);
+          ps.setDouble(2,emi);
+
 
           int count  = ps.executeUpdate();
           if(count!=0)System.out.println("Loan sanctioned successfully!!😊");
