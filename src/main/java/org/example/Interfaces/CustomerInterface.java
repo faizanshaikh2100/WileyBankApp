@@ -14,10 +14,6 @@ public interface CustomerInterface {
     public static void takeLoan(int principleAmount, int noOfMonths, String loanType, int id) {
 
     }
-    public void viewBalance(int id) ;
-    public void addAmount(double amount,int id);
-    public void withdrawal(double amount,int id);
-    public void takeLoan(int principleAmount, int noOfMonths, String loanType);
 
 
 

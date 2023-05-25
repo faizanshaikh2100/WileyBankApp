@@ -4,21 +4,22 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class SignUp {
+
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/wileybankapp";
     static final String USER = "root";
-    static final String PASS = "";
+    static final String PASS = "yedtutti";
 
     public static void main(String[] args) {
+        System.out.println();
+        System.out.println();
+        System.out.println("====== SIGNUP ====");
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
             // Register JDBC driver
             Class.forName(JDBC_DRIVER);
-
-            // Open a connection
-            System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             // Prepare the insert statement
@@ -53,26 +54,11 @@ public class SignUp {
             stmt.executeUpdate();
             System.out.println("Customer inserted successfully!");
 
-            stmt.close();
-            conn.close();
             scanner.close();
         } catch (SQLException se) {
-            se.printStackTrace();
+
         } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (stmt != null)
-                    stmt.close();
-            } catch (SQLException se2) {
-                se2.printStackTrace();
-            }
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+
         }
 
     }
