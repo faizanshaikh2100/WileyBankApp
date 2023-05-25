@@ -7,10 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public interface CustomerInterface {
-    public void viewBalance();
-    public void addAmount(int amount);
-    public void withdrawal(int amount);
-    public void takeLoan(int principleAmount, int noOfMonths, LoanType loanType);
+    public void viewBalance(int id) throws SQLException;
+    public void addAmount(double amount,int id);
+    public void withdrawal(double amount,int id);
+    public void takeLoan(int principleAmount, int noOfMonths, String loanType);
+
 
 //    public void getEmployeeById(int id) throws SQLException, ClassNotFoundException {
 //        con = DBConnection.createDBConnection();
