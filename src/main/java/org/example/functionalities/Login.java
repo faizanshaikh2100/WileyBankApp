@@ -1,5 +1,7 @@
 package org.example.functionalities;
 
+import org.example.View.Customerview;
+
 import java.sql.*;
 import java.util.Scanner;
 
@@ -40,7 +42,7 @@ public class Login {
 
             if (rs.next()) {
                 System.out.println("Login successful!");
-                // Perform further actions or display user information
+                Customerview cv = new Customerview(id);
             } else {
                 System.out.println("Invalid login credentials!");
                 System.out.println("Try Signing Up..");
