@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class CustomerController implements CustomerInterface {
+public abstract class CustomerController implements CustomerInterface {
 
     public static void main(String[] args) {
          takeLoan(69043,2,"HOME_LOAN",2);
