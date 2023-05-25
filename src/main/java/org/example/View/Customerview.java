@@ -27,8 +27,8 @@ public class Customerview {
            int option = sc.nextInt();
            switch (option){
                case 1:
-
-                   CustomerController.viewBalance(id);
+                   int idd4 = Integer.parseInt(args[0]);
+                   CustomerController.viewBalance(idd4);
                    break;
                case 2:
                    System.out.println("How much amount you want to add?");

@@ -21,22 +21,22 @@ public class CustomerController implements CustomerInterface {
     static ResultSet rs = null;
     static Statement st = null;
     static int globalId = 0;
-   //=======================================
+    //=======================================
 
-    public static double viewBalance(int id) {
+    public static void viewBalance(int id) {
         con = DBConnection.createDBConnection();
-    globalId = id;
-        String query = "select customerId,customerBalance from customerAccount where id = ?";
-            double amt = 0.00;
+        globalId = id;
+        String query = "select customerId,customerBalance from customerAccount where customerId = "+id;
+        double amt = 0.00;
         try {
-            ps = con.prepareStatement(query);
+            Statement st = con.createStatement();
 
-            rs = ps.executeQuery();
+            rs = st.executeQuery(query);
 
             while(rs.next())
             {
                 System.out.format("%d\t%f\t\n", rs.getInt(1), rs.getDouble(2));
-                amt = rs.getDouble(2);
+//                amt = rs.getDouble(2);
                 System.out.println("-------------------------------------------");
             }
         }
@@ -46,7 +46,7 @@ public class CustomerController implements CustomerInterface {
         }
 
 
- return amt;
+
     }
 
 
@@ -255,18 +255,18 @@ public class CustomerController implements CustomerInterface {
 
 
         LoanType lType = null;
-      if(loanType.equals(LoanType.HOME_LOAN))lType = LoanType.HOME_LOAN;
-      else if(loanType.equals(LoanType.EDUCATION_LOAN))lType = LoanType.EDUCATION_LOAN;
-      else if(loanType.equals(LoanType.CAR_LOAN))lType = LoanType.CAR_LOAN;
-      else lType = LoanType.PERSONAL_LOAN;
-       //home-10%  // car - 8.8%   //education 7.25    //personal - 11.2
+        if(loanType.equals(LoanType.HOME_LOAN))lType = LoanType.HOME_LOAN;
+        else if(loanType.equals(LoanType.EDUCATION_LOAN))lType = LoanType.EDUCATION_LOAN;
+        else if(loanType.equals(LoanType.CAR_LOAN))lType = LoanType.CAR_LOAN;
+        else lType = LoanType.PERSONAL_LOAN;
+        //home-10%  // car - 8.8%   //education 7.25    //personal - 11.2
 
         double finalAmount = 0.0;
         double emi = 0.0;
         if (lType.equals(LoanType.CAR_LOAN)){
-             finalAmount = calcualteAmount(principleAmount,noOfYears,8.8);
+            finalAmount = calcualteAmount(principleAmount,noOfYears,8.8);
         } else if (lType.equals(LoanType.HOME_LOAN)) {
-             finalAmount = calcualteAmount(principleAmount,noOfYears,10.0);
+            finalAmount = calcualteAmount(principleAmount,noOfYears,10.0);
         }
         else if (lType.equals(LoanType.EDUCATION_LOAN)) {
             finalAmount = calcualteAmount(principleAmount,noOfYears,7.25);
@@ -276,18 +276,18 @@ public class CustomerController implements CustomerInterface {
         emi = finalAmount/(noOfYears*12);
 
         try{
-          con = DBConnection.createDBConnection();
-              //1-id  //2  - balance  //3 - loan  //4 - emi
-          String query = "update customerAccount set loan = ? , emi = ?";
+            con = DBConnection.createDBConnection();
+            //1-id  //2  - balance  //3 - loan  //4 - emi
+            String query = "update customerAccount set loan = ? , emi = ?";
 
 
-          ps = con.prepareStatement(query);
-          ps.setDouble(1,finalAmount);
-          ps.setDouble(2,emi);
+            ps = con.prepareStatement(query);
+            ps.setDouble(1,finalAmount);
+            ps.setDouble(2,emi);
 
 
-          int count  = ps.executeUpdate();
-          if(count!=0)System.out.println("Loan sanctioned successfully!!😊");
+            int count  = ps.executeUpdate();
+            if(count!=0)System.out.println("Loan sanctioned successfully!!😊");
 
 
         }catch (Exception e){
