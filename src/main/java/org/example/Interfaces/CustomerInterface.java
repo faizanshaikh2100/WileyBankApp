@@ -10,7 +10,8 @@ public interface CustomerInterface {
     public void viewBalance();
     public void addAmount(int amount);
     public void withdrawal(int amount);
-    public void takeLoan(int principleAmount, int noOfMonths, LoanType loanType);
+    public void takeLoan(int principleAmount, int noOfMonths, String loanType);
+
 
 //    public void getEmployeeById(int id) throws SQLException, ClassNotFoundException {
 //        con = DBConnection.createDBConnection();
