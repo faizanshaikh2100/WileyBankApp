@@ -1,7 +1,9 @@
+package org.example.functionalities;
+
 import java.sql.*;
 import java.util.Scanner;
 
-public class SignUp {
+public class Login {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/wileybankapp";
     static final String USER = "root";
@@ -10,20 +12,15 @@ public class SignUp {
     public static void main(String[] args) {
         Connection conn = null;
         PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         try {
-            // Register JDBC driver
-            Class.forName(JDBC_DRIVER);
 
-            // Open a connection
+            Class.forName(JDBC_DRIVER);
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            // Prepare the insert statement
-            String insertQuery = "INSERT INTO customers (id, password, email, full_name, address) VALUES (?, ?, ?, ?, ?)";
-            stmt = conn.prepareStatement(insertQuery);
-
-            // Get user input for customer details
+            // Get user input for login credentials
             Scanner scanner = new Scanner(System.in);
 
             System.out.print("Enter customer ID: ");
@@ -32,33 +29,42 @@ public class SignUp {
             System.out.print("Enter password: ");
             String password = scanner.nextLine();
 
-            System.out.print("Enter email: ");
-            String email = scanner.nextLine();
 
-            System.out.print("Enter full name: ");
-            String fullName = scanner.nextLine();
-
-            System.out.print("Enter address: ");
-            String address = scanner.nextLine();
-
+            String loginQuery = "SELECT * FROM customers WHERE id = ? AND password = ?";
+            stmt = conn.prepareStatement(loginQuery);
 
             stmt.setString(1, id);
             stmt.setString(2, password);
-            stmt.setString(3, email);
-            stmt.setString(4, fullName);
-            stmt.setString(5, address);
 
-            stmt.executeUpdate();
-            System.out.println("Customer inserted successfully!");
+            rs = stmt.executeQuery();
 
+            if (rs.next()) {
+                System.out.println("org.example.functionalities.Login successful!");
+                // Perform further actions or display user information
+            } else {
+                System.out.println("Invalid login credentials!");
+                // Handle unsuccessful login
+            }
+
+
+            rs.close();
             stmt.close();
             conn.close();
             scanner.close();
         } catch (SQLException se) {
+
             se.printStackTrace();
         } catch (Exception e) {
+
             e.printStackTrace();
         } finally {
+ 
+            try {
+                if (rs != null)
+                    rs.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
             try {
                 if (stmt != null)
                     stmt.close();
@@ -72,16 +78,5 @@ public class SignUp {
                 se.printStackTrace();
             }
         }
-
     }
 }
-/*
-CREATE TABLE customers (
-    id varchar(10) PRIMARY KEY ,
-    password VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    full_name VARCHAR(100) NOT NULL,
-    address VARCHAR(200)
-);
-
- */

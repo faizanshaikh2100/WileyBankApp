@@ -1,6 +1,5 @@
 package org.example.Controller;
 
-import com.mysql.cj.jdbc.util.ResultSetUtil;
 import org.example.Enums.LoanType;
 import org.example.Interfaces.CustomerInterface;
 import org.example.util.DBConnection;
@@ -12,45 +11,42 @@ import java.sql.Statement;
 
 public class CustomerController implements CustomerInterface {
 
-    //jdbc connectivity=================
-    DBConnection dbConnection = null;
-    Connection con = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
-    Statement st = null;
+    public static void main(String[] args) {
+         takeLoan(69043,2,"HOME_LOAN",2);
+    }
+    //jdbc connectivity===================
 
-    //customer
-    @Override
-    public void viewBalance() {
+    static Connection con = null;
+    static PreparedStatement ps = null;
+    static ResultSet rs = null;
+    static Statement st = null;
+   //=======================================
+
+    public static double viewBalance() {
+
+        return 0;
+    }
+
+    public static void addAmount(int amount) {
 
     }
 
-    @Override
-    public void addAmount(int amount) {
+    public static void withdrawal(int amount) {
 
     }
 
-    @Override
-    public void withdrawal(int amount) {
-
-    }
-    public double calcualteAmount(int principleAmount, int noOfYears,double rateOfInterst){
-        return (principleAmount*noOfYears*rateOfInterst)/100;
+    public static double calcualteAmount(int principleAmount, int noOfYears,double rateOfInterst){
+        return principleAmount+((principleAmount*noOfYears*rateOfInterst)/100);
     }
 
-    public void takeLoan(int principleAmount, int noOfYears, String loanType) {
+    public static void takeLoan(int principleAmount, int noOfYears, String loanType,int id) {
 
         LoanType lType = null;
-       for(LoanType loanType1:LoanType.values()){
-
-           if(loanType.equals(loanType1)){
-               lType =  loanType1;
-           }
-       }
-       //home-10%
-        // car - 8.8%
-        //education 7.25
-        //personal - 11.2
+      if(loanType.equals(LoanType.HOME_LOAN))lType = LoanType.HOME_LOAN;
+      else if(loanType.equals(LoanType.EDUCATION_LOAN))lType = LoanType.EDUCATION_LOAN;
+      else if(loanType.equals(LoanType.CAR_LOAN))lType = LoanType.CAR_LOAN;
+      else lType = LoanType.PERSONAL_LOAN;
+       //home-10%  // car - 8.8%   //education 7.25    //personal - 11.2
 
         double finalAmount = 0.0;
         double emi = 0.0;
@@ -67,9 +63,23 @@ public class CustomerController implements CustomerInterface {
         emi = finalAmount/(noOfYears*12);
 
         try{
+          con = DBConnection.createDBConnection();
+              //1-id  //2  - balance  //3 - loan  //4 - emi
+          String query = "insert into customerAccount values(?,?,?,?)";
+
+
+          ps = con.prepareStatement(query);
+          ps.setInt(1,id);
+          ps.setDouble(2,viewBalance());
+          ps.setDouble(3,finalAmount);
+          ps.setDouble(4,emi);
+
+          int count  = ps.executeUpdate();
+          if(count!=0)System.out.println("Loan sanctioned successfully!!😊");
+
 
         }catch (Exception e){
-
+            System.out.println(e.getMessage());
         }
 
     }

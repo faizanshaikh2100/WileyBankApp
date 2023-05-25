@@ -1,16 +1,16 @@
 package org.example.Interfaces;
 
-import org.example.Enums.LoanType;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 public interface CustomerInterface {
-    public void viewBalance();
-    public void addAmount(int amount);
-    public void withdrawal(int amount);
-    public void takeLoan(int principleAmount, int noOfMonths, String loanType);
+    public static double viewBalance(){
+
+        return 0;
+    }
+    public static void addAmount(int amount){}
+    public static void withdrawal(int amount){}
+
+    public static void takeLoan(int principleAmount, int noOfMonths, String loanType, int id) {
+
+    }
 
 
 //    public void getEmployeeById(int id) throws SQLException, ClassNotFoundException {
