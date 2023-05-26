@@ -1,6 +1,8 @@
 package org.example.Model;
 
+import org.example.Controller.AdminController;
 import org.example.Controller.CustomerController;
+import org.example.View.AdminView;
 import org.example.View.Customerview;
 import org.example.functionalities.Login;
 import org.example.functionalities.SignUp;
@@ -27,6 +29,7 @@ public class WileyBankApp {
 
                 switch (option){
                     case 1:
+                        AdminView.main(args);
                         break;
                     case 2:
                         System.out.println("    1. Login ");

@@ -15,11 +15,9 @@ public class DBConnection {
             // connection string
             String url = "jdbc:mysql://localhost:3306/wileybankapp";
             String username = "root";
-            String password = "imsachin@161";
+            String password = "yedtutti";
 
             conn = DriverManager.getConnection(url,username, password);
-
-            System.out.println("Connection Success");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -5,15 +5,15 @@ import java.util.Scanner;
 
 public class SignUp {
 
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/wileybankapp";
     static final String USER = "root";
-    static final String PASS = "imsachin@161";
+    static final String PASS = "yedtutti";
 
     public static void main(String[] args) {
         System.out.println();
         System.out.println();
-        System.out.println("====== SIGNUP ====");
+        System.out.println("====== SIGNUP ======");
         Connection conn = null;
         PreparedStatement stmt = null;
 
@@ -23,7 +23,7 @@ public class SignUp {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             // Prepare the insert statement
-            String insertQuery = "INSERT INTO customer (id, password, email, full_name, address) VALUES (?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO customers (id, password, email, full_name, address) VALUES (?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(insertQuery);
 
             // Get user input for customer details
@@ -53,26 +53,24 @@ public class SignUp {
             stmt.setString(5, address);
 
             stmt.executeUpdate();
+
+            // creating a new Account for a customer
+            stmt = conn.prepareStatement("Insert into customerAccount values(?,?,?,?,?)");
+            stmt.setInt(1, Integer.parseInt(id));
+            stmt.setDouble(2, 0.00);
+            stmt.setString(3,"");
+            stmt.setDouble(4, 0.00);
+            stmt.setDouble(5, 0.00);
+            stmt.executeUpdate();
+
             System.out.println("Customer inserted successfully!");
 
             Login.main(args);
 
             scanner.close();
-        } catch (SQLException se) {
-
         } catch (Exception e) {
-
+//            System.out.println(e.getMessage());
         }
 
     }
 }
-/*
-CREATE TABLE customers (
-    id VARCHAR(100) PRIMARY KEY ,
-    password VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    full_name VARCHAR(100) NOT NULL,
-    address VARCHAR(200)
-);
-
- */

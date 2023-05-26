@@ -23,6 +23,7 @@ public class Customerview {
            System.out.println("2. Add Amount");
            System.out.println("3. Withdraw Amount");
            System.out.println("4. Take Loan");
+           System.out.println("5. Download PDF");
 
            int option = sc.nextInt();
            switch (option){
@@ -75,14 +76,13 @@ public class Customerview {
                    int idd3 = Integer.parseInt(args[0]);
                    CustomerController.takeLoan(princpleAmount,years,loanType,idd3);
                    break;
+               case 5:
+                   int idd5 = Integer.parseInt(args[0]);
+                   CustomerController.downloadPdf(idd5);
+                   break;
                default:
                    break;
            }
-
-
-
-
-
        }
     }
 }

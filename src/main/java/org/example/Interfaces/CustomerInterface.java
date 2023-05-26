@@ -14,24 +14,7 @@ public interface CustomerInterface {
     public static void takeLoan(int principleAmount, int noOfMonths, String loanType, int id) {
 
     }
+    public static void downloadPdf(){}
 
 
-
-//    public void getEmployeeById(int id) throws SQLException, ClassNotFoundException {
-//        con = DBConnection.createDBConnection();
-//
-//        String query = "SELECT * FROM employee where id = " + id;
-//
-//        try {
-//            Statement st = con.createStatement();
-//            ResultSet rs = st.executeQuery(query);
-//
-//            while (rs.next()) {
-//                System.out.format("%d\t%s\t%f\t%d\\t", rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4));
-//
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

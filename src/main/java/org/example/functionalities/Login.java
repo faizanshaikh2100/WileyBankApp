@@ -9,9 +9,12 @@ public class Login {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/wileybankapp";
     static final String USER = "root";
-    static final String PASS = "imsachin@161";
+    static final String PASS = "yedtutti";
 
     public static void main(String[] args) {
+        System.out.println();
+        System.out.println();
+        System.out.println("====== LOGIN ======");
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -19,7 +22,7 @@ public class Login {
         try {
 
             Class.forName(JDBC_DRIVER);
-            System.out.println("Connecting to database...");
+
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             // Get user input for login credentials
